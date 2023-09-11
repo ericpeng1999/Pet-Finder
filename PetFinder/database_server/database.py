@@ -26,9 +26,10 @@ def getConn() -> tuple[extensions.connection, extensions.cursor, extensions.curs
         raise Exception()
     return (conn,dicCur,cur)
 
-def close(cur: extensions.cursor, conn:extensions.connection) -> None:
-    cur.close()
+def close(conn:extensions.connection, dicCur: extensions.cursor, cur: extensions.cursor) -> None:
     conn.close()
+    dicCur.close()
+    cur.close()
         # create_script = '''
         #     CREATE TABLE IF NOT EXISTS employee(
         #     id      int PRIMARY KEY,

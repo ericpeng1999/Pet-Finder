@@ -1,11 +1,8 @@
 from typing import List, Dict, Any
 from fastapi import FastAPI
-from psycopg2 import extras
-import builtins
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import FileResponse
 from pet_finder_client import PetFinderClient
-from models.animal import Animal
 from pathlib import Path
 from database import getConn, close
 
@@ -47,7 +44,6 @@ def update_info(type: str, page: int) -> bool:
 conn, dicCur, cur = getConn()
 def ini():
     global conn, cur
-    print("executed ini")
     types = pet_finder_client.get_animal_types()
     cur.execute('DROP TABLE IF EXISTS types;')
     cur.execute('''
@@ -74,7 +70,7 @@ def ini():
 ini()
 @app.get('/')
 async def root() -> List[str]:
-    global conn, cur
+    global cur
     cur.execute('SELECT type from types')
     return [t[0] for t in cur.fetchall()]
 
@@ -96,15 +92,12 @@ async def get_animals(type: str, page: int) -> tuple[int, list[Dict[str, int | s
     return (totalPages, cur_animals)
 
 @app.get('/{type}/{page}/{id}')
-async def get_animal_by_ID(type: str, page: int, id: int) -> Animal:
-    global cur_animals, cur_last_page
-    global conn, dicCur, cur
-    if update_info(type, page):
-        response = pet_finder_client.get_animals(cur_type, cur_page)
-        cur_last_page = response[0]['total_pages']
-        animals = response[1]
-        cur_animals = [{'id': item.id, 'name': item.name, 'description': item.description, 'imgURL': item.photos[0].small} for item in animals]
-    return pet_finder_client.get_animal(type, page, id)
+async def get_animal_by_ID(type: str, page: int, id: int):
+    global dicCur
+    dicCur.execute(f'SELECT * FROM "{type}" WHERE id={id}')
+    result = dict(dicCur.fetchall()[0])
+    print(result)
+    return result
 
 @app.get('/no_image')
 async def get_no_img():
@@ -113,3 +106,8 @@ async def get_no_img():
 @app.get('/refresh')
 async def refreshDB():
     ini()
+
+@app.on_event("shutdown")
+def shutdown_event():
+    global conn, dicCur, cur
+    close(conn, dicCur, cur)
