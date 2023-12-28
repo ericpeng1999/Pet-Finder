@@ -33,14 +33,6 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-def update_info(type: str, page: int) -> bool:
-    global cur_type, cur_page, cur_animals
-    if type != cur_type or page != cur_page:
-        cur_type = type
-        cur_page = page
-        return True
-    return False
-
 conn, dicCur, cur = getConn()
 def ini():
     global conn, cur
