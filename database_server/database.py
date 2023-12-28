@@ -3,7 +3,7 @@ from psycopg2.extras import DictCursor
 
 def getConn() -> tuple[extensions.connection, extensions.cursor, extensions.cursor]:
     hostname = 'localhost'
-    database = 'postgres'
+    database = 'petfinder'
     username = 'user'
     pwd = '1234'
     port_id = 5432

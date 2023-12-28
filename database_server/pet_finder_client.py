@@ -71,39 +71,3 @@ class PetFinderClient:
             
         except Exception as e:
             raise Exception(f"Failed to get animal with id {id}. Error: {e}")
-
-
-# should be saved in a secure place
-
-# client_id = "Umcqw6TWPCwhteNyMqJNLJEeasrecM3RcTHZRJQWQjwBfzgzl9"
-# client_secret = "lw1oCR5FgETXi6y2YEzmj2WZ1TVE6sGkIdy6E0o8"
-
-# pet_finder_client = PetFinderClient(client_id=client_id, client_secret=client_secret)
-# animals = pet_finder_client.get_animals(type="dog", page=2)
-
-
-# class Animal:
-#     name: str
-#     breed: str
-#     type: str
-
-# List[Animal]
-
-# json.loads()
-# json.dumps()
-
-# 1. python as backend service
-# a. create pet finder client
-# b. create some api endpoints using fast api
-# c. python virtual environment
-# 2. JS as frontend
-# a. services.js contains all the backend calls -> call backend service
-# fetch(
-# "https://jsonplaceholder.typicode.com/users")
-#             .then((res) => res.json())
-#             .then((json) => {
-#                 this.setState({
-#                     items: json,
-#                     DataisLoaded: true
-#                 });
-#             })
