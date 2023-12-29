@@ -1,0 +1,9 @@
+services:
+  postgresDB:
+    image: postgres
+    ports:
+      - 5432:5432
+    environment:
+      - POSTGRES_DB=petfinder
+      - POSTGRES_PASSWORD=1234
+      - POSTGRES_USER=user
