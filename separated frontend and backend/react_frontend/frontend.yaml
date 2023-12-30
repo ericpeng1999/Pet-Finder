@@ -1,0 +1,5 @@
+services:
+  frontend:
+    image: pet-frontend
+    ports:
+      - 3000:3000

@@ -1,0 +1,21 @@
+services:
+  postgresDB:
+    image: postgres
+    ports:
+      - 5432:5432
+    environment:
+      - POSTGRES_DB=petfinder
+      - POSTGRES_USER=user
+      - POSTGRES_PASSWORD=1234
+  backend:
+    image: pet-backend
+    depends_on:
+      - postgresDB
+    ports:
+      - 8000:8000
+    environment:
+      - POSTGRES_DB=petfinder
+      - POSTGRES_USER=user
+      - POSTGRES_PASSWORD=1234
+      - CLIENT_ID=Umcqw6TWPCwhteNyMqJNLJEeasrecM3RcTHZRJQWQjwBfzgzl9
+      - CLIENT_SECRET=lw1oCR5FgETXi6y2YEzmj2WZ1TVE6sGkIdy6E0o8
