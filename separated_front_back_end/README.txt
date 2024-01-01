@@ -2,7 +2,7 @@ build images:
 docker build -t pet-frontend .\react_frontend\
 docker build -t pet-backend .\database_server\
 
-start:
+start: (should be in two separate terminal)
 	docker compose -f .\database_server\backend.yaml up
 	docker compose -f .\react_frontend\frontend.yaml up
 stop:

@@ -8,7 +8,7 @@ services:
       - POSTGRES_USER=user
       - POSTGRES_PASSWORD=1234
   backend:
-    image: pet-backend
+    image: pet-backend:1.0
     depends_on:
       - postgresDB
     ports:
