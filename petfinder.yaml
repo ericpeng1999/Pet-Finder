@@ -22,7 +22,7 @@ services:
   frontend:
     image: 378932370168.dkr.ecr.us-west-1.amazonaws.com/pet-frontend:1.0
     depends_on:
-      - 378932370168.dkr.ecr.us-west-1.amazonaws.com/pet-backend:1.0
+      - backend
     ports:
       - 3000:3000
     
