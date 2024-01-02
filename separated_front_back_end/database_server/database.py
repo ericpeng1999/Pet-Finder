@@ -22,7 +22,7 @@ def getConn() -> tuple[extensions.connection, extensions.cursor, extensions.curs
             print("success")
             break
         except:
-            time.sleep(100)
+            time.sleep(2)
             continue
         
     dicCur = conn.cursor(cursor_factory=DictCursor)
