@@ -1,5 +1,5 @@
 services:
   frontend:
-    image: 378932370168.dkr.ecr.us-west-1.amazonaws.com/pet-frontend:1.0
+    image: public.ecr.aws/r4t8b3u1/pet-frontend:1.0
     ports:
       - 3000:3000

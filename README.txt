@@ -1,4 +1,6 @@
-Each folder corresponds to a different realization. The images(separated_front_back_end) are on AWS and can be deployed as follows:
+Each folder corresponds to a different local realization, follow instructions inside.
+
+To get the public AWS images, run the follows:
 
 start: (should be in two separate terminal)
 	docker compose -f backend.yaml up

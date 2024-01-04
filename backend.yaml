@@ -8,7 +8,7 @@ services:
       - POSTGRES_USER=user
       - POSTGRES_PASSWORD=1234
   backend:
-    image: 378932370168.dkr.ecr.us-west-1.amazonaws.com/pet-backend:1.0
+    image: public.ecr.aws/r4t8b3u1/pet-backend:1.0
     depends_on:
       - postgresDB
     ports:
