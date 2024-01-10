@@ -1,5 +1,6 @@
 import os
 from typing import List, Dict, Any
+from contextlib import asynccontextmanager
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import FileResponse
@@ -17,7 +18,15 @@ cur_type: str = ""
 cur_page: int = 0
 cur_last_page: int = 0
 
-app = FastAPI()
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    ini_DB()
+    yield
+    global conn, dicCur, cur
+    close(conn, dicCur, cur)
+
+
+app = FastAPI(lifespan=lifespan)
 
 img_path = Path('models')
 
@@ -34,7 +43,8 @@ app.add_middleware(
 )
 
 conn, dicCur, cur = getConn()
-def ini():
+
+def ini_DB():
     global conn, cur
     types = pet_finder_client.get_animal_types()
     cur.execute('DROP TABLE IF EXISTS types;')
@@ -59,7 +69,7 @@ def ini():
             )
         ''')
     conn.commit()
-ini()
+
 @app.get('/')
 async def root() -> List[str]:
     global cur
@@ -97,9 +107,4 @@ async def get_no_img():
 
 @app.get('/refresh')
 async def refreshDB():
-    ini()
-
-@app.on_event("shutdown")
-def shutdown_event():
-    global conn, dicCur, cur
-    close(conn, dicCur, cur)
+    ini_DB()
